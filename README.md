@@ -11,6 +11,9 @@ investimentos.
 
 Basta abrir o arquivo `index.html` no navegador.
 
+Para apresentar ou enviar para alguem sem depender de outros arquivos, use o
+arquivo `apresentacao.html`. Ele contem HTML, CSS e JavaScript no mesmo arquivo.
+
 Se quiser rodar com um servidor local:
 
 ```bash
