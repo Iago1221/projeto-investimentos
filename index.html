@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Acompanhamento de Carteira Conservadora</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Praticas bancarias e cooperativistas</p>
+        <h1>Carteira conservadora de R$ 500 mil</h1>
+        <p class="hero-text">
+          Simulador para acompanhar a rentabilidade estimada entre 23/05/2026
+          e 26/06/2026, com foco em renda fixa, liquidez e preservacao de
+          capital.
+        </p>
+      </div>
+      <div class="hero-card">
+        <span>Perfil</span>
+        <strong>Conservador</strong>
+        <small>CDBs com FGC, Tesouro Selic e Fundo DI</small>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="panel controls" aria-labelledby="premissas-title">
+        <div>
+          <p class="section-label">Premissas</p>
+          <h2 id="premissas-title">Parametros da simulacao</h2>
+        </div>
+
+        <div class="form-grid">
+          <label>
+            Valor inicial
+            <input id="initialAmount" type="number" min="0" step="1000" value="500000" />
+          </label>
+          <label>
+            Data inicial
+            <input id="startDate" type="date" value="2026-05-23" />
+          </label>
+          <label>
+            Data de avaliacao
+            <input id="endDate" type="date" value="2026-06-26" />
+          </label>
+          <label>
+            CDI (% ao ano)
+            <input id="cdiRate" type="number" min="0" step="0.01" value="14.40" />
+          </label>
+          <label>
+            Selic (% ao ano)
+            <input id="selicRate" type="number" min="0" step="0.01" value="14.50" />
+          </label>
+          <label>
+            IR sobre rendimento (%)
+            <input id="taxRate" type="number" min="0" step="0.1" value="22.5" />
+          </label>
+        </div>
+
+        <div class="notice">
+          <strong>Nota:</strong>
+          como 23/05/2026 cai em um sabado, a aplicacao efetiva e considerada
+          no primeiro dia util seguinte. O simulador tambem desconsidera
+          04/06/2026 como feriado nacional de Corpus Christi.
+        </div>
+      </section>
+
+      <section class="summary-grid" aria-label="Resumo da carteira">
+        <article class="metric">
+          <span>Valor final liquido</span>
+          <strong id="finalValue">R$ 0,00</strong>
+        </article>
+        <article class="metric">
+          <span>Lucro liquido estimado</span>
+          <strong id="netProfit">R$ 0,00</strong>
+        </article>
+        <article class="metric">
+          <span>Rentabilidade liquida</span>
+          <strong id="netReturn">0,00%</strong>
+        </article>
+        <article class="metric">
+          <span>Dias uteis considerados</span>
+          <strong id="businessDays">0</strong>
+        </article>
+      </section>
+
+      <section class="layout">
+        <article class="panel" aria-labelledby="carteira-title">
+          <div class="section-heading">
+            <div>
+              <p class="section-label">Alocacao</p>
+              <h2 id="carteira-title">Carteira sugerida</h2>
+            </div>
+            <button id="resetPortfolio" type="button">Restaurar sugestao</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Investimento</th>
+                  <th>Valor</th>
+                  <th>Taxa</th>
+                  <th>Rendimento liquido</th>
+                  <th>Valor final</th>
+                </tr>
+              </thead>
+              <tbody id="portfolioRows"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <aside class="panel" aria-labelledby="composicao-title">
+          <p class="section-label">Composicao</p>
+          <h2 id="composicao-title">Distribuicao por ativo</h2>
+          <div id="allocationChart" class="allocation-chart"></div>
+          <ul class="risk-list">
+            <li>CDBs em emissores diferentes para respeitar o limite do FGC.</li>
+            <li>Tesouro Selic reduz risco de credito privado.</li>
+            <li>Fundo DI traz liquidez e facilidade operacional.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="panel" aria-labelledby="evolucao-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-label">Acompanhamento</p>
+            <h2 id="evolucao-title">Evolucao estimada da carteira</h2>
+          </div>
+          <span id="effectiveDate" class="tag"></span>
+        </div>
+
+        <div class="chart-card">
+          <svg id="evolutionChart" role="img" aria-label="Grafico de evolucao estimada"></svg>
+        </div>
+
+        <div class="table-wrap compact">
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Dias uteis acumulados</th>
+                <th>Valor liquido estimado</th>
+              </tr>
+            </thead>
+            <tbody id="evolutionRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel explanation" aria-labelledby="justificativa-title">
+        <p class="section-label">Justificativa</p>
+        <h2 id="justificativa-title">Por que essa carteira e conservadora?</h2>
+        <p>
+          O prazo e curto, por isso a carteira evita ativos com grande
+          oscilacao, como acoes, fundos imobiliarios, dolar, criptoativos e
+          titulos prefixados ou indexados ao IPCA com vencimentos longos. A
+          escolha privilegia instrumentos pos-fixados, que acompanham CDI ou
+          Selic e tendem a oscilar pouco no periodo.
+        </p>
+        <p>
+          A simulacao tambem evita LCI/LCA porque esses produtos costumam ter
+          carencia minima, muitas vezes superior ao periodo analisado.
+        </p>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
